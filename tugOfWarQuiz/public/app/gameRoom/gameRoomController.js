@@ -96,17 +96,37 @@ angular.module('tugOfWarApp').controller('gameRoomController', function($cookies
     })
   }
 
+  // Hide previous quesiton button when creator sees first question
+  document.querySelectorAll('.gameRoomSubmitButton')[1].style.display = "none";
+
+   // Allows creator to go to the next question
+  $scope.prevQuestion = () => {
+    $scope.answer = '';
+   
+    if (questionNumber > 0) {
+      questionNumber--;
+    }
+
+    if (questionNumber === 0) {
+      document.querySelectorAll('.gameRoomSubmitButton')[1].style.display = "none";
+    }
+
+    $scope.question = questions[questionNumber].question;
+    document.querySelectorAll('.gameRoomSubmitButton')[2].style.display = "inline";
+    document.querySelectorAll('.gameRoomSubmitButton')[3].style.display = "inline";
+  }
 
   // Allows creator to go to the next question
   $scope.nextQuestion = () => {
+    document.querySelectorAll('.gameRoomSubmitButton')[1].style.display = "inline";
     $scope.answer = '';
     questionNumber++;
     if (questions[questionNumber]) {
       $scope.question = questions[questionNumber].question;
     } else {
       $scope.question = 'Quiz Complete!'
-      document.querySelectorAll('.gameRoomSubmitButton')[1].style.display = "none";
       document.querySelectorAll('.gameRoomSubmitButton')[2].style.display = "none";
+      document.querySelectorAll('.gameRoomSubmitButton')[3].style.display = "none";
     }
   }
 
